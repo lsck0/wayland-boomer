@@ -1,0 +1,39 @@
+CompileFlags:
+  Compiler: clang
+  Add: [
+    -xc,
+    -std=c23,
+    -pedantic,
+    -Wall,
+    -Wextra,
+    -Wpedantic,
+  ]
+
+Diagnostics:
+  ClangTidy:
+    Add: [
+      bugprone-*,
+      cert-*,
+      clang-analyzer-*,
+      concurrency-*,
+      linuxkernel-*,
+      misc-*,
+      modernize-*,
+      performance-*,
+      portability-*,
+      readability-*,
+    ]
+    Remove: [
+      misc-include-cleaner,
+      misc-static-assert,
+      modernize-use-nullptr,
+      modernize-use-trailing-return-type,
+      readability-braces-around-statements,
+      readability-enum-initial-value,
+      readability-function-cognitive-complexity,
+      readability-function-size,
+      readability-identifier-length,
+      readability-implicit-bool-conversion,
+      readability-magic-numbers,
+      readability-math-missing-parentheses,
+    ]

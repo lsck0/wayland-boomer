@@ -1,0 +1,47 @@
+BasedOnStyle: LLVM
+
+AlignAfterOpenBracket: BlockIndent
+AlignArrayOfStructures: Right
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: false
+  AlignCompound: true
+AlignConsecutiveDeclarations:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: true
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: true
+AlignConsecutiveShortCaseStatements:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
+  AlignCaseColons: false
+AlignEscapedNewlines: Right
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 0
+AlignOperands: AlignAfterOperator
+AllowAllArgumentsOnNextLine: false
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortFunctionsOnASingleLine: None
+BinPackArguments: false
+BreakAfterAttributes: Always
+ColumnLimit: 120
+IndentWidth: 2
+IncludeBlocks: Regroup
+ForEachMacros:
+  [
+    range_for,
+    array_for,
+    array_for_reverse,
+    array_foreach,
+    array_foreach_reverse,
+    hmap_foreach_key,
+    hmap_foreach_value,
+    hset_foreach,
+  ]
+PointerAlignment: Left
+TypenameMacros: [derive_array, derive_hmap, derive_hset]
