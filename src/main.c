@@ -1,7 +1,17 @@
-#include "raylib.h"
+#include "image.h"
+
+#include <memory.h>
+#include <raylib.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
 int main(void) {
   SetTraceLogLevel(LOG_INFO);
+
+  bool        was_file;
+  const char* ext;
+  Image       img = load_image_from_stdin(&was_file, &ext);
+  if (memcmp(&img, &(Image){0}, sizeof(Image)) == 0) return EXIT_FAILURE;
 
   SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST);
   InitWindow(1080, 720, "wayland-boomer");
@@ -43,6 +53,7 @@ int main(void) {
     EndDrawing();
   }
 
+  UnloadImage(img);
   CloseWindow();
   return 0;
 }

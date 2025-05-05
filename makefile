@@ -10,7 +10,7 @@ default:
 
 .PHONY: run
 run: $(EXEC)
-	ASAN_OPTIONS=detect_leaks=1 LSAN_OPTIONS=suppressions=lsan.supp ./$(EXEC)
+	grim - | ASAN_OPTIONS=detect_leaks=1 LSAN_OPTIONS=suppressions=lsan.supp ./$(EXEC)
 
 .PHONY: build
 build: $(EXEC)
@@ -20,7 +20,7 @@ install: $(EXEC)
 	sudo cp $(EXEC) /usr/bin/
 
 $(EXEC):
-	clang ./src/main.c \
+	clang ./src/main.c ./src/image.c \
 		-o $(EXEC) \
 		-std=c23 -pedantic -Wall -Wextra -Wpedantic -ggdb -O3 -Wno-gnu \
 		-flto -lraylib \
