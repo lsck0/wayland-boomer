@@ -31,6 +31,10 @@ int main(void) {
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
     if (IsKeyPressed(KEY_Q) || IsKeyPressed(KEY_ESCAPE)) break;
+    if (IsKeyPressed(KEY_ZERO)) {
+      zoom    = 1.0F;
+      panning = (Vector2){0, 0};
+    }
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
       // BUG: raylib's GetMousePosition() is broken when the window is on multiple monitors
       Vector2 d  = GetMouseDelta();
