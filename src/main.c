@@ -3,8 +3,13 @@
 
 #include <memory.h>
 #include <raylib.h>
+#include <raymath.h>
 #include <stdbool.h>
 #include <stdlib.h>
+
+const float ZOOM_MIN  = 0.01F;
+const float ZOOM_MAX  = 15.0F;
+const float ZOOM_STEP = 0.15F;
 
 int main(void) {
   SetTraceLogLevel(LOG_INFO);
@@ -21,6 +26,7 @@ int main(void) {
   UnloadImage(img);
 
   Vector2 panning = {0, 0};
+  float   zoom    = 1.0F;
 
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
@@ -34,10 +40,20 @@ int main(void) {
       // Vector2 mouse_pos = GetMousePosition();
       // TraceLog(LOG_INFO, "Mouse position: %f %f", mouse_pos.x, mouse_pos.y);
     }
+    float wheel = GetMouseWheelMove();
+    if (wheel != 0) {
+      // BUG: raylib's GetMousePosition() is broken when the window is on multiple monitors
+      Vector2 mouse_pos = GetMousePosition();
+      float   prevZoom  = zoom;
+      Vector2 world     = {(mouse_pos.x - panning.x) / prevZoom, (mouse_pos.y - panning.y) / prevZoom};
+      zoom              = Clamp(zoom + wheel * ZOOM_STEP, ZOOM_MIN, ZOOM_MAX);
+      panning.x         = mouse_pos.x - world.x * zoom;
+      panning.y         = mouse_pos.y - world.y * zoom;
+    }
 
     BeginTextureMode(img_render_texture);
     ClearBackground(BLACK);
-    DrawTextureEx(img_texture, panning, 0.0F, 1.0F, WHITE);
+    DrawTextureEx(img_texture, panning, 0.0F, zoom, WHITE);
     EndTextureMode();
 
     BeginDrawing();
