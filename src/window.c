@@ -1,11 +1,9 @@
-#include "window.h"
+#include "./headers/window.h"
+
+#include "./headers/defaults.h"
 
 #include <assert.h>
 #include <raylib.h>
-
-const char* WINDOW_TITLE  = "wayland-boomer";
-const int   WINDOW_WIDTH  = 1080; // used when image was loaded from file
-const int   WINDOW_HEIGHT = 720;
 
 static void place_window_top_left(void);
 

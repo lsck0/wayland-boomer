@@ -4,3 +4,4 @@
 </div>
 
 WARNING: This is work in progress and not yet ready for use.
+WARNING #2: There currently seem to be raylib bugs which prevent multi-monitor panning/zooming from working correctly.

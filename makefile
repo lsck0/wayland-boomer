@@ -20,7 +20,7 @@ install: $(EXEC)
 	sudo cp $(EXEC) /usr/bin/
 
 $(EXEC):
-	clang ./src/main.c ./src/image.c ./src/window.c \
+	clang ./src/main.c ./src/defaults.c ./src/image.c ./src/window.c ./src/controls.c \
 		-o $(EXEC) \
 		-std=c23 -pedantic -Wall -Wextra -Wpedantic -ggdb -O3 -Wno-gnu \
 		-flto -lraylib \

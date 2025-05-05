@@ -1,4 +1,4 @@
-#include "image.h"
+#include "./headers/image.h"
 
 #include <memory.h>
 #include <raylib.h>
