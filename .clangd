@@ -24,6 +24,7 @@ Diagnostics:
       readability-*,
     ]
     Remove: [
+      bugprone-easily-swappable-parameters,
       misc-include-cleaner,
       misc-static-assert,
       modernize-use-nullptr,

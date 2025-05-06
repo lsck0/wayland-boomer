@@ -1,3 +1,4 @@
+#include "./headers/args.h"
 #include "./headers/controls.h"
 #include "./headers/defaults.h"
 #include "./headers/image.h"
@@ -31,8 +32,11 @@ static const char* flashlight_frag_shader_source =
   "}\n";
 // clang-format on
 
-int main(void) {
+int main(int argc, char** argv) {
   SetTraceLogLevel(LOG_INFO);
+
+  Args args = parse_commandline_arguments(argc, argv);
+  (void)args;
 
   state = initial_state;
 
