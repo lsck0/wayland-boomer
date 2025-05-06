@@ -10,7 +10,7 @@ default:
 
 .PHONY: run
 run: $(EXEC)
-	grim - | ASAN_OPTIONS=detect_leaks=1 LSAN_OPTIONS=suppressions=lsan.supp ./$(EXEC)
+	grim - | ./$(EXEC)
 
 .PHONY: build
 build: $(EXEC)
@@ -23,5 +23,4 @@ $(EXEC):
 	clang ./src/main.c ./src/defaults.c ./src/image.c ./src/window.c ./src/controls.c \
 		-o $(EXEC) \
 		-std=c23 -pedantic -Wall -Wextra -Wpedantic -ggdb -O3 -Wno-gnu \
-		-flto -lraylib \
-		-fsanitize=address,undefined
+		-flto -lraylib
