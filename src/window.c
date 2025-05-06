@@ -50,8 +50,11 @@ static void place_window_top_left(void) {
   // should be enough to use SetWindowPosition() to place the window correctly until wayland itself figures this out.
   // for now we display the window at GetMonitorPosition(1) if there are multiple monitors. at least for my setup,
   // this displayed the window at the top left corner of the leftmost monitor as wanted.
-  // TODO: introduce flag
-  int     monitor_idx      = GetMonitorCount() == 1 ? 0 : 1;
+  int monitor_idx = GetMonitorCount() == 1 ? 0 : 1;
+  if (g_args->leftmost_monitor >= 0) {
+    monitor_idx = g_args->leftmost_monitor;
+  }
+
   Vector2 monitor_position = GetMonitorPosition(monitor_idx);
   SetWindowPosition((int)monitor_position.x, (int)monitor_position.y);
 }

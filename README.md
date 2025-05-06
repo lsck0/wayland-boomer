@@ -7,21 +7,16 @@ WARNING: There currently seem to be raylib bugs which prevent multi-monitor pann
 
 ## Usage
 
-Fullscreen mode:
-
 ```sh
-grim - | wayland-boomer
+Usage:
+  grim - | ./wayland-boomer [options]                    Boomer Mode
+  ./wayland-boomer [options] < image.[png|jpg|webp|bmp]  Image Viewer Mode
+Options:
+  -h,         --help                                     Show this message and exit.
+  -v,         --version                                  Show version and exit.
+  -lmm <int>, --leftmost-monitor <int>                   Monitor to place the window origin on.
 
 ```
-
-Image mode:
-
-```sh
-wayland-boomer < image.png
-
-```
-
-Currently supported image formats: png, jpg, webp, bmp.
 
 ## Keybindings
 
@@ -39,6 +34,7 @@ Currently supported image formats: png, jpg, webp, bmp.
 ## Dependencies
 
 - raylib
+- wl-copy (optional, for screenshots to clipboard)
 
 ## Development
 

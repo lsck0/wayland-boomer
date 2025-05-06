@@ -17,6 +17,11 @@ const Configuration g_default_configuration = {
     .flashlight_radius_step = 20.0F,
 };
 
+const Args g_default_args = {
+    .program_name     = NULL,
+    .leftmost_monitor = -1,
+};
+
 const State g_initial_state = {
     .pan                = {0, 0},
     .zoom               = 1.0F,
@@ -35,7 +40,7 @@ __attribute__((__constructor__)) void initialize_globals(void) {
 
   g_args = malloc(sizeof(Args));
   assert(g_args);
-  memset(g_args, 0, sizeof(Args));
+  *g_args = g_default_args;
 
   g_state = malloc(sizeof(State));
   assert(g_state);
