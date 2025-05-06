@@ -9,13 +9,14 @@ WARNING: There currently seem to be raylib bugs which prevent multi-monitor pann
 
 ```sh
 Usage:
-  grim - | ./wayland-boomer [options]                    Boomer Mode
-  ./wayland-boomer [options] < image.[png|jpg|webp|bmp]  Image Viewer Mode
+  grim - | ./wayland-boomer [options]                        Boomer Mode
+  ./wayland-boomer [options] < image.[png|jpg|webp|bmp]      Image Viewer Mode
 Options:
-  -h,         --help                                     Show this message and exit.
-  -v,         --version                                  Show version and exit.
-  -lmm <int>, --leftmost-monitor <int>                   Monitor to place the window origin on.
-  -sd <path>, --screenshot-dir <path>                    Folder to save screenshots in.
+  -h,             --help                                     Show this message and exit.
+  -v,             --version                                  Show version and exit.
+  -lmm <int>,     --leftmost-monitor <int>                   Monitor to place the window origin on.
+  -sd <path>,     --screenshot-dir <path>                    Folder to save screenshots in.
+  -bg <rgba hex>, --background <rgba hex>                    Background color.
 
 ```
 

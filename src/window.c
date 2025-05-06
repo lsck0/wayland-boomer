@@ -17,7 +17,8 @@ void init_raylib_window(int width, int height, bool image_was_file) {
     height = g_configuration->window_height;
   } else {
     SetConfigFlags(
-        FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST | FLAG_WINDOW_RESIZABLE
+        FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST | FLAG_WINDOW_TRANSPARENT |
+        FLAG_WINDOW_RESIZABLE
     );
   }
 
