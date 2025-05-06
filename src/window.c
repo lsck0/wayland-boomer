@@ -16,7 +16,9 @@ void init_raylib_window(int width, int height, bool image_was_file) {
     width  = WINDOW_WIDTH;
     height = WINDOW_HEIGHT;
   } else {
-    SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST);
+    SetConfigFlags(
+        FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST | FLAG_WINDOW_RESIZABLE
+    );
   }
 
   InitWindow(width, height, WINDOW_TITLE);
