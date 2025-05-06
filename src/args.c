@@ -1,5 +1,7 @@
 #include "./headers/args.h"
 
+#include "./headers/globals.h"
+
 #include <assert.h>
 #include <stdlib.h>
 #include <stdnoreturn.h>
@@ -10,30 +12,24 @@
     argv++;                                                                                                            \
   } while (0)
 
-static void          print_usage(const char* program_name);
-static noreturn void error_and_exit(const char* program_name, const char* message);
+static void          print_usage(void);
+static noreturn void error_and_exit(const char* message);
 
-Args parse_commandline_arguments(int argc, char** argv) {
-  Args args = {0};
-
+void process_commandline_arguments(int argc, char** argv) {
   assert(argc > 0);
-  args.program_name = argv[0];
+  g_args->program_name = argv[0];
 
   while (argc > 1) {
     shift(argc, argv);
 
     // TODO: flag parsing
   }
-
-  return args;
 }
 
-static void print_usage(const char* program_name) {
-  (void)program_name;
+static void print_usage(void) {
 }
 
-static noreturn void error_and_exit(const char* program_name, const char* message) {
-  (void)program_name;
+static noreturn void error_and_exit(const char* message) {
   (void)message;
 
   abort();

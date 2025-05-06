@@ -1,0 +1,49 @@
+#include "./headers/globals.h"
+
+#include <assert.h>
+#include <memory.h>
+#include <stdlib.h>
+
+const Configuration g_default_configuration = {
+    .window_title           = "wayland-boomer",
+    .window_width           = 1080,
+    .window_height          = 720,
+    .background_color       = BLACK,
+    .zoom_min               = 0.25F,
+    .zoom_max               = 20.0F,
+    .zoom_step              = 0.2F,
+    .flashlight_radius_min  = 20.0F,
+    .flashlight_radius_max  = 600.0F,
+    .flashlight_radius_step = 20.0F,
+};
+
+const State g_initial_state = {
+    .pan                = {0, 0},
+    .zoom               = 1.0F,
+    .flashlight_enabled = false,
+    .flashlight_radius  = 100.0F,
+};
+
+Configuration* g_configuration = NULL;
+Args*          g_args          = NULL;
+State*         g_state         = NULL;
+
+__attribute__((__constructor__)) void initialize_globals(void) {
+  g_configuration = malloc(sizeof(Configuration));
+  assert(g_configuration);
+  *g_configuration = g_default_configuration;
+
+  g_args = malloc(sizeof(Args));
+  assert(g_args);
+  memset(g_args, 0, sizeof(Args));
+
+  g_state = malloc(sizeof(State));
+  assert(g_state);
+  *g_state = g_initial_state;
+}
+
+__attribute__((__destructor__)) void deinitialize_globals(void) {
+  free(g_configuration);
+  free(g_args);
+  free(g_state);
+}

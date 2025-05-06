@@ -1,6 +1,6 @@
 #include "./headers/window.h"
 
-#include "./headers/defaults.h"
+#include "./headers/globals.h"
 
 #include <assert.h>
 #include <raylib.h>
@@ -13,15 +13,15 @@ void init_raylib_window(int width, int height, bool image_was_file) {
 
   if (image_was_file) {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    width  = WINDOW_WIDTH;
-    height = WINDOW_HEIGHT;
+    width  = g_configuration->window_width;
+    height = g_configuration->window_height;
   } else {
     SetConfigFlags(
         FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST | FLAG_WINDOW_RESIZABLE
     );
   }
 
-  InitWindow(width, height, WINDOW_TITLE);
+  InitWindow(width, height, g_configuration->window_title);
   SetWindowFocused();
 
   if (!image_was_file) place_window_top_left();

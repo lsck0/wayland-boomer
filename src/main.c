@@ -1,8 +1,7 @@
 #include "./headers/args.h"
 #include "./headers/controls.h"
-#include "./headers/defaults.h"
+#include "./headers/globals.h"
 #include "./headers/image.h"
-#include "./headers/state.h"
 #include "./headers/window.h"
 
 #include <memory.h>
@@ -10,8 +9,6 @@
 #include <raymath.h>
 #include <stdbool.h>
 #include <stdlib.h>
-
-static State state;
 
 // clang-format off
 static const char* flashlight_frag_shader_source =
@@ -33,12 +30,9 @@ static const char* flashlight_frag_shader_source =
 // clang-format on
 
 int main(int argc, char** argv) {
+  process_commandline_arguments(argc, argv);
+
   SetTraceLogLevel(LOG_INFO);
-
-  Args args = parse_commandline_arguments(argc, argv);
-  (void)args;
-
-  state = initial_state;
 
   bool  was_file;
   Image img = load_image_from_stdin(&was_file, NULL);
@@ -58,18 +52,18 @@ int main(int argc, char** argv) {
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
     if (IsKeyPressed(KEY_Q) || IsKeyPressed(KEY_ESCAPE)) break;
-    handle_inputs(&state);
+    handle_inputs();
 
     BeginTextureMode(img_render_texture);
-    ClearBackground(BACKGROUND_COLOR);
-    DrawTextureEx(img_texture, state.pan, 0.0F, state.zoom, WHITE);
+    ClearBackground(g_configuration->background_color);
+    DrawTextureEx(img_texture, g_state->pan, 0.0F, g_state->zoom, WHITE);
     EndTextureMode();
 
     BeginDrawing();
-    if (state.flashlight_enabled) {
-      Vector2 m            = GetMousePosition();
-      float   u_center[2]  = {m.x, (float)GetScreenHeight() - m.y};
-      float   u_radius[1]  = {state.flashlight_radius};
+    if (g_state->flashlight_enabled) {
+      Vector2 mouse_pos    = GetMousePosition();
+      float   u_center[2]  = {mouse_pos.x, (float)GetScreenHeight() - mouse_pos.y};
+      float   u_radius[1]  = {g_state->flashlight_radius};
       int     u_texture[1] = {0};
       SetShaderValue(flashlight_shader, loc_center, u_center, SHADER_UNIFORM_VEC2);
       SetShaderValue(flashlight_shader, loc_radius, u_radius, SHADER_UNIFORM_FLOAT);
@@ -78,7 +72,7 @@ int main(int argc, char** argv) {
       BeginShaderMode(flashlight_shader);
     }
 
-    ClearBackground(BACKGROUND_COLOR);
+    ClearBackground(g_configuration->background_color);
     DrawTextureRec(
         img_render_texture.texture,
         (Rectangle){0, 0, (float)img_render_texture.texture.width, (float)-img_render_texture.texture.height},
@@ -86,7 +80,7 @@ int main(int argc, char** argv) {
         WHITE
     );
 
-    if (state.flashlight_enabled) {
+    if (g_state->flashlight_enabled) {
       EndShaderMode();
     }
 
