@@ -17,6 +17,6 @@ extern const float ZOOM_STEP;
 extern const float FLASHLIGHT_RADIUS_MIN;
 extern const float FLASHLIGHT_RADIUS_MAX;
 extern const float FLASHLIGHT_RADIUS_STEP;
-extern const State initial_wb_state;
+extern const State initial_state;
 
 #endif // __DEFAULTS_H__

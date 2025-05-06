@@ -34,7 +34,7 @@ static const char* flashlight_frag_shader_source =
 int main(void) {
   SetTraceLogLevel(LOG_INFO);
 
-  state = initial_wb_state;
+  state = initial_state;
 
   bool  was_file;
   Image img = load_image_from_stdin(&was_file, NULL);

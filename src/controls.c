@@ -19,7 +19,7 @@ void handle_inputs(State* state) {
 
 static void handle_reset(State* state) {
   if (IsKeyPressed(KEY_ZERO)) {
-    *state = initial_wb_state;
+    *state = initial_state;
   }
 }
 
