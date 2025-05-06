@@ -33,6 +33,7 @@ Currently supported image formats: png, jpg, webp, bmp.
 | Mouse Wheel            | Zoom In/Out              |
 | `f`                    | Toggle Flashlight        |
 | `CTRL` + Mouse Wheel   | Change Flashlight Radius |
+| `s`                    | Take a Screenshot        |
 
 ## Dependencies
 
