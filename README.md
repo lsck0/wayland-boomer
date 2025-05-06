@@ -3,5 +3,47 @@
   <h3>zoomer application for linux</h3>
 </div>
 
-WARNING: This is work in progress and not yet ready for use.
-WARNING #2: There currently seem to be raylib bugs which prevent multi-monitor panning/zooming from working correctly.
+WARNING: There currently seem to be raylib bugs which prevent multi-monitor panning/zooming/flashlight from working correctly.
+
+## Usage
+
+Fullscreen mode:
+
+```sh
+grim - | wayland-boomer
+
+```
+
+Image mode:
+
+```sh
+wayland-boomer < image.png
+
+```
+
+Currently supported image formats: png, jpg, webp, bmp.
+
+## Keybindings
+
+| Input                  | Action                   |
+| ---------------------- | ------------------------ |
+| `ESC` or `q`           | Quit                     |
+| 0                      | Reset                    |
+| Left Mouse Button Drag | Pan                      |
+| Mouse Wheel            | Zoom In/Out              |
+| `f`                    | Toggle Flashlight        |
+| `CTRL` + Mouse Wheel   | Change Flashlight Radius |
+
+## Dependencies
+
+- raylib
+
+## Development
+
+```sh
+make
+```
+
+## References
+
+- https://github.com/tsoding/boomer
