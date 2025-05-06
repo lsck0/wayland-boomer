@@ -15,6 +15,7 @@ Options:
   -h,         --help                                     Show this message and exit.
   -v,         --version                                  Show version and exit.
   -lmm <int>, --leftmost-monitor <int>                   Monitor to place the window origin on.
+  -sd <path>, --screenshot-dir <path>                    Folder to save screenshots in.
 
 ```
 

@@ -109,20 +109,22 @@ void handle_screenshot(void) {
     }
 
     if (should_save_to_file) {
-      bool        should_probe_for_xdg_picture_dir = false;
-      const char* folder                           = getenv("XDG_PICTURES_DIR");
+      const char* folder;
 
-      if (folder == NULL) {
-        folder                           = getenv("HOME");
-        should_probe_for_xdg_picture_dir = true;
+      if (g_args->screenshot_folder != NULL) {
+        folder = g_args->screenshot_folder;
+      } else {
+        folder = getenv("XDG_PICTURES_DIR");
       }
 
       if (folder == NULL) {
-        TraceLog(LOG_ERROR, "Could not find XDG_PICTURES_DIR or HOME environment variable");
-        goto cleanup;
-      }
+        folder = getenv("HOME");
 
-      if (should_probe_for_xdg_picture_dir) {
+        if (folder == NULL) {
+          TraceLog(LOG_ERROR, "Could not find XDG_PICTURES_DIR or HOME environment variable");
+          goto cleanup;
+        }
+
         if (DirectoryExists(TextFormat("%s/Pictures", folder))) {
           folder = TextFormat("%s/Pictures", folder);
         } else if (DirectoryExists(TextFormat("%s/pictures", folder))) {

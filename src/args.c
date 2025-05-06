@@ -55,6 +55,21 @@ void process_commandline_arguments(int argc, char** argv) {
       shift(argc, argv);
       continue;
     }
+    if (strcmp(*argv, "-sd") == 0 || strcmp(*argv, "--screenshot-dir") == 0) {
+      shift(argc, argv);
+      if (argc < 1) {
+        error_and_exit("Missing value for -sd/--screenshot-dir.");
+      }
+
+      if (!DirectoryExists(*argv)) {
+        error_and_exit("Invalid value for -sd/--screenshot-dir. The directory does not exist.");
+      }
+
+      g_args->screenshot_folder = *argv;
+
+      shift(argc, argv);
+      continue;
+    }
   }
 }
 
@@ -69,6 +84,7 @@ static void print_usage(FILE* sink) {
   (void)fprintf(sink, "  -h,         --help                    %*s Show this message and exit.\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -v,         --version                 %*s Show version and exit.\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -lmm <int>, --leftmost-monitor <int>  %*s Monitor to place the window origin on.\n", (int)strlen(g_args->program_name), " ");
+  (void)fprintf(sink, "  -sd <path>, --screenshot-dir <path>   %*s Folder to save screenshots in.\n", (int)strlen(g_args->program_name), " ");
   // clang-format on
 }
 

@@ -18,8 +18,9 @@ const Configuration g_default_configuration = {
 };
 
 const Args g_default_args = {
-    .program_name     = NULL,
-    .leftmost_monitor = -1,
+    .program_name      = NULL,
+    .leftmost_monitor  = -1,
+    .screenshot_folder = NULL,
 };
 
 const State g_initial_state = {

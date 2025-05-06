@@ -15,6 +15,7 @@ typedef struct {
 typedef struct {
   char* program_name;
   int   leftmost_monitor;
+  char* screenshot_folder;
 } Args;
 
 typedef struct {
