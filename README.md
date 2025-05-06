@@ -28,7 +28,7 @@ Currently supported image formats: png, jpg, webp, bmp.
 | Input                  | Action                   |
 | ---------------------- | ------------------------ |
 | `ESC` or `q`           | Quit                     |
-| 0                      | Reset                    |
+| `0`                    | Reset                    |
 | Left Mouse Button Drag | Pan                      |
 | Mouse Wheel            | Zoom In/Out              |
 | `f`                    | Toggle Flashlight        |
