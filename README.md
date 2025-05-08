@@ -3,7 +3,11 @@
   <h3>zoomer application for linux</h3>
 </div>
 
-WARNING: There currently seem to be raylib bugs which prevent multi-monitor panning/zooming/flashlight from working correctly.
+WARNING: There currently seem to be raylib bugs which prevent multi-monitor panning/zooming/flashlight/drawing from working correctly.
+
+## Demo
+
+![Demo](https://raw.githubusercontent.com/lsck0/wayland-boomer/master/assets/demo.gif)
 
 ## Usage
 
@@ -19,6 +23,8 @@ Options:
   -bg <rgba hex>, --background <rgba hex>                    Background color.
 
 ```
+
+All defaults can be changed, if there is a need for adding more options, please open an issue.
 
 ## Keybindings
 
@@ -36,7 +42,8 @@ Options:
 
 ## Dependencies
 
-- raylib
+- grim (for taking the screenshot)
+- raylib (the graphics library)
 - wl-copy (optional, for screenshots to clipboard)
 
 ## Development
