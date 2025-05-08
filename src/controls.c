@@ -4,6 +4,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 
 #include "../vendor/stb_image_write.h"
+#include "./headers/draw.h"
 #include "./headers/globals.h"
 
 #include <raylib.h>
@@ -24,16 +25,18 @@ void handle_inputs(void) {
   handle_zoom();
   handle_flashlight();
   handle_screenshot();
+  handle_draw();
 }
 
 static void handle_reset(void) {
   if (IsKeyPressed(KEY_ZERO)) {
     *g_state = g_initial_state;
+    lines_clear();
   }
 }
 
 static void handle_panning(void) {
-  if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+  if (IsMouseButtonDown(MOUSE_BUTTON_LEFT && !g_state->is_drawing)) {
     // BUG: raylib's GetMousePosition() is broken when the window is on multiple monitors
     Vector2 mouse_delta  = GetMouseDelta();
     g_state->pan.x      += mouse_delta.x;
@@ -46,7 +49,7 @@ static void handle_panning(void) {
 
 static void handle_zoom(void) {
   float mouse_wheel_delta = GetMouseWheelMove();
-  if (mouse_wheel_delta != 0 && !IsKeyDown(KEY_LEFT_CONTROL) && !IsKeyDown(KEY_RIGHT_CONTROL)) {
+  if (mouse_wheel_delta != 0 && !g_state->is_drawing && !IsKeyDown(KEY_LEFT_CONTROL) && !IsKeyDown(KEY_RIGHT_CONTROL)) {
     // BUG: raylib's GetMousePosition() is broken when the window is on multiple monitors
     Vector2 mouse_pos = GetMousePosition();
     float   prev_zoom = g_state->zoom;

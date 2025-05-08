@@ -22,16 +22,17 @@ Options:
 
 ## Keybindings
 
-| Input                  | Action                                                  |
-| ---------------------- | ------------------------------------------------------- |
-| `ESC` or `q`           | Quit                                                    |
-| `0`                    | Reset                                                   |
-| Left Mouse Button Drag | Pan                                                     |
-| Mouse Wheel            | Zoom In/Out                                             |
-| `f`                    | Toggle Flashlight                                       |
-| `CTRL` + Mouse Wheel   | Change Flashlight Radius                                |
-| `s`                    | Take a Screenshot to Clipboard (needs wl-copy)          |
-| `CTRL` + `s`           | Take a Screenshot to File (to $XDG_PICTURE_DIR / $HOME) |
+| Input                   | Action                                                  |
+| ----------------------- | ------------------------------------------------------- |
+| `ESC` or `q`            | Quit                                                    |
+| `0`                     | Reset                                                   |
+| Left Mouse Button Drag  | Pan                                                     |
+| Mouse Wheel             | Zoom In/Out                                             |
+| `f`                     | Toggle Flashlight                                       |
+| `CTRL` + Mouse Wheel    | Change Flashlight Radius                                |
+| `s`                     | Take a Screenshot to Clipboard (needs wl-copy)          |
+| `CTRL` + `s`            | Take a Screenshot to File (to $XDG_PICTURE_DIR / $HOME) |
+| Right Mouse Button Drag | Draw                                                    |
 
 ## Dependencies
 

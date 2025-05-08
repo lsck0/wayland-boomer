@@ -1,5 +1,6 @@
 #include "./headers/args.h"
 #include "./headers/controls.h"
+#include "./headers/draw.h"
 #include "./headers/globals.h"
 #include "./headers/image.h"
 #include "./headers/window.h"
@@ -57,6 +58,7 @@ int main(int argc, char** argv) {
     BeginTextureMode(img_render_texture);
     ClearBackground(g_configuration->background_color);
     DrawTextureEx(img_texture, g_state->pan, 0.0F, g_state->zoom, WHITE);
+    lines_draw();
     EndTextureMode();
 
     BeginDrawing();

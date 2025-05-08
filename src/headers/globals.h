@@ -10,6 +10,7 @@ typedef struct {
   float   zoom;
   bool    flashlight_enabled;
   float   flashlight_radius;
+  bool    is_drawing;
 } State;
 
 typedef struct {
@@ -29,6 +30,8 @@ typedef struct {
   float flashlight_radius_min;
   float flashlight_radius_max;
   float flashlight_radius_step;
+  Color draw_color;
+  float draw_thickness;
 } Configuration;
 
 extern const Configuration g_default_configuration;
