@@ -3,7 +3,7 @@
   <h3>zoomer application for linux</h3>
 </div>
 
-WARNING: There currently seem to be raylib bugs which prevent multi-monitor panning/zooming/flashlight/drawing from working correctly.
+DISCLAIMER: Many features on a multi-monitor setup are currently not working correctly, see [#4931](https://github.com/raysan5/raylib/issues/4931).
 
 ## Demo
 
