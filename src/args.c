@@ -38,23 +38,6 @@ void process_commandline_arguments(int argc, char** argv) {
       (void)fprintf(stdout, "Version: %s\n", s_version);
       exit(EXIT_SUCCESS);
     }
-    if (strcmp(*argv, "-lmm") == 0 || strcmp(*argv, "--leftmost-monitor") == 0) {
-      shift(argc, argv);
-      if (argc < 1) {
-        error_and_exit("Missing value for -lmm/--leftmost-monitor.");
-      }
-
-      long int parse_result = strtol(*argv, NULL, 10);
-      if (parse_result < 0 || parse_result >= 5) { // surely noone sane has 5+ monitors
-        error_and_exit(
-            "Invalid value for -lmm/--leftmost-monitor. It has to be a number between 0 and your monitor count -1."
-        );
-      }
-      g_args->leftmost_monitor = (int)parse_result;
-
-      shift(argc, argv);
-      continue;
-    }
     if (strcmp(*argv, "-sd") == 0 || strcmp(*argv, "--screenshot-dir") == 0) {
       shift(argc, argv);
       if (argc < 1) {
@@ -104,7 +87,6 @@ static void print_usage(FILE* sink) {
   (void)fprintf(sink, "Options:\n");
   (void)fprintf(sink, "  -h,             --help                    %*s Show this message and exit.\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -v,             --version                 %*s Show version and exit.\n", (int)strlen(g_args->program_name), " ");
-  (void)fprintf(sink, "  -lmm <int>,     --leftmost-monitor <int>  %*s Monitor to place the window origin on.\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -sd <path>,     --screenshot-dir <path>   %*s Folder to save screenshots in.\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -bg <rgba hex>, --background <rgba hex>   %*s Background color.\n", (int)strlen(g_args->program_name), " ");
   // clang-format on

@@ -3,7 +3,6 @@
 #include "./headers/draw.h"
 #include "./headers/globals.h"
 #include "./headers/image.h"
-#include "./headers/window.h"
 
 #include <memory.h>
 #include <raylib.h>
@@ -39,7 +38,16 @@ int main(int argc, char** argv) {
   Image img = load_image_from_stdin(&was_file, NULL);
   if (memcmp(&img, &(Image){0}, sizeof(Image)) == 0) return EXIT_FAILURE;
 
-  init_raylib_window(img.width, img.height, was_file);
+  if (was_file) {
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    InitWindow(g_configuration->window_width, g_configuration->window_height, g_configuration->window_title_imagemode);
+  } else {
+    SetConfigFlags(
+        FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST | FLAG_WINDOW_TRANSPARENT |
+        FLAG_WINDOW_RESIZABLE
+    );
+    InitWindow(img.width, img.height, g_configuration->window_title_boomermode);
+  }
 
   Texture2D       img_texture        = LoadTextureFromImage(img);
   RenderTexture2D img_render_texture = LoadRenderTexture(img.width, img.height);

@@ -15,12 +15,12 @@ typedef struct {
 
 typedef struct {
   char* program_name;
-  int   leftmost_monitor;
   char* screenshot_folder;
 } Args;
 
 typedef struct {
-  char* window_title;
+  char* window_title_boomermode;
+  char* window_title_imagemode;
   int   window_width;
   int   window_height;
   Color background_color;

@@ -7,23 +7,23 @@
 #include <stdlib.h>
 
 const Configuration g_default_configuration = {
-    .window_title           = "wayland-boomer",
-    .window_width           = 1080,
-    .window_height          = 720,
-    .background_color       = BLACK,
-    .zoom_min               = 0.25F,
-    .zoom_max               = 20.0F,
-    .zoom_step              = 0.2F,
-    .flashlight_radius_min  = 20.0F,
-    .flashlight_radius_max  = 600.0F,
-    .flashlight_radius_step = 20.0F,
-    .draw_color             = RED,
-    .draw_thickness         = 3.5F,
+    .window_title_boomermode = "wayland-boomer",
+    .window_title_imagemode  = "wayland-boomer - image viewer",
+    .window_width            = 1080,
+    .window_height           = 720,
+    .background_color        = BLACK,
+    .zoom_min                = 0.25F,
+    .zoom_max                = 20.0F,
+    .zoom_step               = 0.2F,
+    .flashlight_radius_min   = 20.0F,
+    .flashlight_radius_max   = 600.0F,
+    .flashlight_radius_step  = 20.0F,
+    .draw_color              = RED,
+    .draw_thickness          = 3.5F,
 };
 
 const Args g_default_args = {
     .program_name      = NULL,
-    .leftmost_monitor  = -1,
     .screenshot_folder = NULL,
 };
 

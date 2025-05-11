@@ -1,9 +1,7 @@
 #include "./headers/controls.h"
 
 #define _POSIX_C_SOURCE 200809L // for popen()/pclose()
-#define STB_IMAGE_WRITE_IMPLEMENTATION
 
-#include "../vendor/stb_image_write.h"
 #include "./headers/draw.h"
 #include "./headers/globals.h"
 
@@ -12,6 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+// from stb_image_write.h, which is part of raylib
+unsigned char* stbi_write_png_to_mem(const unsigned char* pixels, int stride_bytes, int x, int y, int n, int* out_len);
 
 static void handle_reset(void);
 static void handle_panning(void);
@@ -37,20 +38,15 @@ static void handle_reset(void) {
 
 static void handle_panning(void) {
   if (IsMouseButtonDown(MOUSE_BUTTON_LEFT && !g_state->is_drawing)) {
-    // BUG: raylib's GetMousePosition() is broken when the window is on multiple monitors
     Vector2 mouse_delta  = GetMouseDelta();
     g_state->pan.x      += mouse_delta.x;
     g_state->pan.y      += mouse_delta.y;
-
-    // Vector2 mouse_pos = GetMousePosition();
-    // TraceLog(LOG_INFO, "Mouse position: %f %f", mouse_pos.x, mouse_pos.y);
   }
 }
 
 static void handle_zoom(void) {
   float mouse_wheel_delta = GetMouseWheelMove();
   if (mouse_wheel_delta != 0 && !g_state->is_drawing && !IsKeyDown(KEY_LEFT_CONTROL) && !IsKeyDown(KEY_RIGHT_CONTROL)) {
-    // BUG: raylib's GetMousePosition() is broken when the window is on multiple monitors
     Vector2 mouse_pos = GetMousePosition();
     float   prev_zoom = g_state->zoom;
     Vector2 world     = {(mouse_pos.x - g_state->pan.x) / prev_zoom, (mouse_pos.y - g_state->pan.y) / prev_zoom};

@@ -3,8 +3,6 @@
   <h3>zoomer application for linux</h3>
 </div>
 
-DISCLAIMER: Many features on a multi-monitor setup are currently not working correctly, see [#4931](https://github.com/raysan5/raylib/issues/4931).
-
 ## Demo
 
 ![Demo](https://raw.githubusercontent.com/lsck0/wayland-boomer/master/assets/demo.gif)
@@ -18,13 +16,25 @@ Usage:
 Options:
   -h,             --help                                     Show this message and exit.
   -v,             --version                                  Show version and exit.
-  -lmm <int>,     --leftmost-monitor <int>                   Monitor to place the window origin on.
   -sd <path>,     --screenshot-dir <path>                    Folder to save screenshots in.
   -bg <rgba hex>, --background <rgba hex>                    Background color.
 
 ```
 
 All defaults can be changed, if there is a need for adding more options, please open an issue.
+
+Because this is a native wayland window, positioning has to be done through the window manager.
+In the case of Hyprland, this can be done with the following rules:
+
+```
+windowrule = float,     title:^wayland-boomer$
+windowrule = monitor 1, title:^wayland-boomer$
+windowrule = move 0 0,  title:^wayland-boomer$
+```
+
+When opening a file, the window title will be `wayland-boomer - image viewer`.
+
+NOTE: You need to set `monitor` to your leftmost monitor.
 
 ## Keybindings
 
@@ -42,8 +52,8 @@ All defaults can be changed, if there is a need for adding more options, please 
 
 ## Dependencies
 
-- grim (for taking the screenshot)
-- raylib (the graphics library)
+- glfw
+- grim (for taking the screenshot, any other screenshot tool that can output to stdout works)
 - wl-copy (optional, for screenshots to clipboard)
 
 ## Development
