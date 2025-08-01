@@ -3,6 +3,9 @@
   <h3>zoomer application for linux</h3>
 </div>
 
+[![License](https://img.shields.io/github/license/lsck0/wayland-boomer)](LICENSE)
+[![AUR Package](https://img.shields.io/aur/version/wayland-boomer-git)](https://aur.archlinux.org/packages/wayland-boomer-git)
+
 ## Demo
 
 ![Demo](https://raw.githubusercontent.com/lsck0/wayland-boomer/master/assets/demo.gif)
@@ -30,6 +33,7 @@ In the case of Hyprland, this can be done with the following rules:
 windowrule = float,     title:^wayland-boomer$
 windowrule = monitor 1, title:^wayland-boomer$
 windowrule = move 0 0,  title:^wayland-boomer$
+windowrule = noanim,    title:^wayland-boomer$
 ```
 
 When opening a file, the window title will be `wayland-boomer - image viewer`.
@@ -49,6 +53,23 @@ NOTE: You need to set `monitor` to your leftmost monitor.
 | `s`                     | Take a Screenshot to Clipboard (needs wl-copy)          |
 | `CTRL` + `s`            | Take a Screenshot to File (to $XDG_PICTURE_DIR / $HOME) |
 | Right Mouse Button Drag | Draw                                                    |
+
+## Installation
+
+`wayland-boomer` is available on the AUR: [wayland-boomer-git](https://aur.archlinux.org/packages/wayland-boomer-git/).
+You can install it using your AUR helper of choice, for example:
+
+```sh
+yay -S wayland-boomer-git
+```
+
+Alternatively, you can build it from source:
+
+```sh
+git clone https://github.com/lsck0/wayland-boomer.git
+cd wayland-boomer
+make build
+```
 
 ## Dependencies
 
