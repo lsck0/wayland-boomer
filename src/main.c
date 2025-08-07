@@ -4,6 +4,7 @@
 #include "./headers/globals.h"
 #include "./headers/image.h"
 
+#include <math.h>
 #include <memory.h>
 #include <raylib.h>
 #include <raymath.h>
@@ -46,7 +47,13 @@ int main(int argc, char** argv) {
         FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST | FLAG_WINDOW_TRANSPARENT |
         FLAG_WINDOW_RESIZABLE
     );
-    InitWindow(img.width, img.height, g_configuration->window_title_boomermode);
+
+    // compensate for monitor scaling: compositor multiplies the window size by the scaling factor
+    int window_width  = (int)roundf((float)img.width / g_configuration->monitor_scaling);
+    int window_height = (int)roundf((float)img.height / g_configuration->monitor_scaling);
+    g_state->zoom     = 1 / g_configuration->monitor_scaling;
+
+    InitWindow(window_width, window_height, g_configuration->window_title_boomermode);
   }
 
   Texture2D       img_texture        = LoadTextureFromImage(img);

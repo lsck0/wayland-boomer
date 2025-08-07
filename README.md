@@ -20,6 +20,7 @@ Options:
   -h,             --help                                     Show this message and exit.
   -v,             --version                                  Show version and exit.
   -sd <path>,     --screenshot-dir <path>                    Folder to save screenshots in.
+  -ms <float>,    --monitor-scaling <float>                  Compositor monitor scaling (default 1).
   -bg <rgba hex>, --background <rgba hex>                    Background color.
 
 ```
@@ -36,9 +37,14 @@ windowrule = move 0 0,  title:^wayland-boomer$
 windowrule = noanim,    title:^wayland-boomer$
 ```
 
+You need to set `monitor` to your leftmost monitor, `hyprctl monitors` shows all monitors and their IDs.
 When opening a file, the window title will be `wayland-boomer - image viewer`.
 
-NOTE: You need to set `monitor` to your leftmost monitor.
+In case you are using monitor scaling, pass the same value to the `--monitor-scaling` option:
+
+```
+monitor=DP-1, 3840x2160@144, 0x0, 1.666667  =>  --monitor-scaling 1.666667
+```
 
 ## Keybindings
 

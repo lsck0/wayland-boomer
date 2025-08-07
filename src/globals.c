@@ -11,6 +11,7 @@ const Configuration g_default_configuration = {
     .window_title_imagemode  = "wayland-boomer - image viewer",
     .window_width            = 1080,
     .window_height           = 720,
+    .monitor_scaling         = 1.0F,
     .background_color        = BLACK,
     .zoom_min                = 0.25F,
     .zoom_max                = 20.0F,

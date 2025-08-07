@@ -23,6 +23,7 @@ typedef struct {
   char* window_title_imagemode;
   int   window_width;
   int   window_height;
+  float monitor_scaling;
   Color background_color;
   float zoom_min;
   float zoom_max;

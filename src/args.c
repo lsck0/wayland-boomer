@@ -3,6 +3,7 @@
 #include "./headers/globals.h"
 
 #include <assert.h>
+#include <errno.h>
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +38,23 @@ void process_commandline_arguments(int argc, char** argv) {
     if (strcmp(*argv, "-v") == 0 || strcmp(*argv, "--version") == 0) {
       (void)fprintf(stdout, "Version: %s\n", s_version);
       exit(EXIT_SUCCESS);
+    }
+    if (strcmp(*argv, "-ms") == 0 || strcmp(*argv, "--monitor-scaling") == 0) {
+      shift(argc, argv);
+      if (argc < 1) {
+        error_and_exit("Missing value for -mc/--monitor-scaling.");
+      }
+
+      errno              = 0;
+      float parse_result = strtof(*argv, NULL);
+      if (errno != 0 || parse_result <= 0.0F) {
+        error_and_exit("Invalid value for -mc/--monitor-scaling. It has to be a positive floating point number.");
+      }
+
+      g_configuration->monitor_scaling = parse_result;
+
+      shift(argc, argv);
+      continue;
     }
     if (strcmp(*argv, "-sd") == 0 || strcmp(*argv, "--screenshot-dir") == 0) {
       shift(argc, argv);
@@ -87,6 +105,7 @@ static void print_usage(FILE* sink) {
   (void)fprintf(sink, "Options:\n");
   (void)fprintf(sink, "  -h,             --help                    %*s Show this message and exit.\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -v,             --version                 %*s Show version and exit.\n", (int)strlen(g_args->program_name), " ");
+  (void)fprintf(sink, "  -ms <float>,    --monitor-scaling <float> %*s Compositor monitor scaling (default 1).\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -sd <path>,     --screenshot-dir <path>   %*s Folder to save screenshots in.\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -bg <rgba hex>, --background <rgba hex>   %*s Background color.\n", (int)strlen(g_args->program_name), " ");
   // clang-format on
