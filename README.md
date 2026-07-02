@@ -14,17 +14,18 @@
 
 ```sh
 Usage:
-  grim - | ./wayland-boomer [options]                            Boomer Mode
-  ./wayland-boomer [options] < image.[png|jpg|webp|bmp]          Image Viewer Mode
+  grim - | ./wayland-boomer [options]                                      Boomer Mode
+  ./wayland-boomer [options] < image.[png|jpg|webp|bmp]                    Image Viewer Mode
 Options:
-  -h,             --help                                         Show this message and exit.
-  -v,             --version                                      Show version and exit.
-  -ms <float>,    --monitor-scaling <float>                      Compositor monitor scaling (default 1.000000).
-  -sd <path>,     --screenshot-dir <path>                        Folder to save screenshots in.
-  -bg <rgba hex>, --background <rgba hex>                        Background color (default 000000ff).
-  -pr <float>,    --pan-rigidity <float>                         Pan/Zoom rigidity (default 25.000000).
-  -fr <float>,    --flashlight-rigidity <float>                  Flashlight radius rigidity (default 10.000000).
-  -fd <float>,    --flashlight-darkness <float>                  Flashlight darkness (default 0.100000).
+  -h,              --help                                                  Show this message and exit.
+  -v,              --version                                               Show version and exit.
+  -ms <float>,     --monitor-scaling <float>                               Compositor monitor scaling (default 1.000000).
+  -sd <path>,      --screenshot-dir <path>                                 Folder to save screenshots in.
+  -bg <rgba hex>,  --background <rgba hex>                                 Background color (default 000000ff).
+  -pr <float>,     --pan-rigidity <float>                                  Pan/Zoom rigidity (default 25.000000).
+  -fr <float>,     --flashlight-rigidity <float>                           Flashlight radius rigidity (default 10.000000).
+  -fd <float>,     --flashlight-darkness <float>                           Flashlight darkness (default 0.100000).
+  -fdr <float>,    --flashlight-darkness-rigidity <float>                  Flashlight darkness rigidity (default 10.000000).
 
 ```
 

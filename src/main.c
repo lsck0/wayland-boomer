@@ -77,12 +77,37 @@ int main(int argc, char** argv) {
      */
 
     float dt       = GetFrameTime();
-    float r_smooth = 1.0F - expf(-g_configuration->flashlight_radius_rigidity * dt);
     float z_smooth = 1.0F - expf(-g_configuration->pan_rigidity * dt);
+    float r_smooth = 1.0F - expf(-g_configuration->flashlight_radius_rigidity * dt);
+    float d_smooth = 1.0F - expf(-g_configuration->flashlight_darkness_rigidity * dt);
 
-    g_state->flashlight_radius_current = Lerp(g_state->flashlight_radius_current, g_state->flashlight_radius_target, r_smooth);
-    g_state->zoom_current              = Lerp(g_state->zoom_current, g_state->zoom_target, z_smooth);
-    g_state->pan_current               = Vector2Lerp(g_state->pan_current, g_state->pan_target, z_smooth);
+    g_state->zoom_current = Lerp(g_state->zoom_current, g_state->zoom_target, z_smooth);
+    g_state->pan_current  = Vector2Lerp(g_state->pan_current, g_state->pan_target, z_smooth);
+
+    // ENABLE
+    if (!g_state->flashlight_enabled_previously && g_state->flashlight_enabled) {
+      g_state->flashlight_radius_current   = 1000.0;
+      g_state->flashlight_darkness_current = 1.0;
+      g_state->flashlight_rendering        = true;
+    }
+    g_state->flashlight_enabled_previously = g_state->flashlight_enabled;
+
+    // ANIMATION
+    if (g_state->flashlight_rendering) {
+      if (g_state->flashlight_enabled) {
+        g_state->flashlight_radius_current   = Lerp(g_state->flashlight_radius_current, g_state->flashlight_radius_target, r_smooth);
+        g_state->flashlight_darkness_current = Lerp(g_state->flashlight_darkness_current, g_configuration->flashlight_darkness, d_smooth);
+      } else {
+        g_state->flashlight_radius_current   = Lerp(g_state->flashlight_radius_current, 1000.0F, r_smooth);
+        g_state->flashlight_darkness_current = Lerp(g_state->flashlight_darkness_current, 1.0F, d_smooth);
+
+        if (fabsf(g_state->flashlight_radius_current - 1000.0F) < 5.0F && fabsf(g_state->flashlight_darkness_current - 1.0F) < 0.05F) {
+          g_state->flashlight_rendering        = false;
+          g_state->flashlight_radius_current   = g_configuration->flashlight_radius_initial;
+          g_state->flashlight_darkness_current = g_configuration->flashlight_darkness;
+        }
+      }
+    }
 
     /*
      * ─────────────────────────────────────────────────────────
@@ -97,7 +122,7 @@ int main(int argc, char** argv) {
     EndTextureMode();
 
     BeginDrawing();
-    if (g_state->flashlight_enabled) {
+    if (g_state->flashlight_rendering) {
       Vector2 mouse_pos     = GetMousePosition();
       int     u_texture[1]  = { 0 };
       float   u_center[2]   = { mouse_pos.x, (float)GetScreenHeight() - mouse_pos.y };
@@ -119,7 +144,7 @@ int main(int argc, char** argv) {
         WHITE
     );
 
-    if (g_state->flashlight_enabled) EndShaderMode();
+    if (g_state->flashlight_rendering) EndShaderMode();
 
     EndDrawing();
   }

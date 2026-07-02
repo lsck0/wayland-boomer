@@ -35,6 +35,7 @@ typedef struct {
   float flashlight_radius_initial;
   float flashlight_radius_rigidity;
   float flashlight_darkness;
+  float flashlight_darkness_rigidity;
   Color draw_color;
   float draw_thickness;
 } Configuration;
@@ -51,6 +52,7 @@ typedef struct {
   float   zoom_target;
   bool    flashlight_rendering;
   bool    flashlight_enabled;
+  bool    flashlight_enabled_previously;
   float   flashlight_radius_current;
   float   flashlight_radius_target;
   float   flashlight_darkness_current;

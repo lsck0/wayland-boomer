@@ -129,17 +129,18 @@ static void print_usage(FILE* sink) {
 
   // clang-format off
   (void)fprintf(sink, "Usage: \n");
-  (void)fprintf(sink, "  grim - | %s [options]                            Boomer Mode\n", g_args->program_name);
-  (void)fprintf(sink, "  %s [options] < image.[png|jpg|webp|bmp]          Image Viewer Mode\n", g_args->program_name);
+  (void)fprintf(sink, "  grim - | %s [options]                                      Boomer Mode\n", g_args->program_name);
+  (void)fprintf(sink, "  %s [options] < image.[png|jpg|webp|bmp]                    Image Viewer Mode\n", g_args->program_name);
   (void)fprintf(sink, "Options:\n");
-  (void)fprintf(sink, "  -h,             --help                        %*s Show this message and exit.\n", (int)strlen(g_args->program_name), " ");
-  (void)fprintf(sink, "  -v,             --version                     %*s Show version and exit.\n", (int)strlen(g_args->program_name), " ");
-  (void)fprintf(sink, "  -ms <float>,    --monitor-scaling <float>     %*s Compositor monitor scaling (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->monitor_scaling);
-  (void)fprintf(sink, "  -sd <path>,     --screenshot-dir <path>       %*s Folder to save screenshots in.\n", (int)strlen(g_args->program_name), " ");
-  (void)fprintf(sink, "  -bg <rgba hex>, --background <rgba hex>       %*s Background color (default %.8lx).\n", (int)strlen(g_args->program_name), " ", default_bg_color_hex);
-  (void)fprintf(sink, "  -pr <float>,    --pan-rigidity <float>        %*s Pan/Zoom rigidity (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->pan_rigidity);
-  (void)fprintf(sink, "  -fr <float>,    --flashlight-rigidity <float> %*s Flashlight radius rigidity (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->flashlight_radius_rigidity);
-  (void)fprintf(sink, "  -fd <float>,    --flashlight-darkness <float> %*s Flashlight darkness (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->flashlight_darkness);
+  (void)fprintf(sink, "  -h,              --help                                 %*s Show this message and exit.\n", (int)strlen(g_args->program_name), " ");
+  (void)fprintf(sink, "  -v,              --version                              %*s Show version and exit.\n", (int)strlen(g_args->program_name), " ");
+  (void)fprintf(sink, "  -ms <float>,     --monitor-scaling <float>              %*s Compositor monitor scaling (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->monitor_scaling);
+  (void)fprintf(sink, "  -sd <path>,      --screenshot-dir <path>                %*s Folder to save screenshots in.\n", (int)strlen(g_args->program_name), " ");
+  (void)fprintf(sink, "  -bg <rgba hex>,  --background <rgba hex>                %*s Background color (default %.8lx).\n", (int)strlen(g_args->program_name), " ", default_bg_color_hex);
+  (void)fprintf(sink, "  -pr <float>,     --pan-rigidity <float>                 %*s Pan/Zoom rigidity (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->pan_rigidity);
+  (void)fprintf(sink, "  -fr <float>,     --flashlight-rigidity <float>          %*s Flashlight radius rigidity (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->flashlight_radius_rigidity);
+  (void)fprintf(sink, "  -fd <float>,     --flashlight-darkness <float>          %*s Flashlight darkness (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->flashlight_darkness);
+  (void)fprintf(sink, "  -fdr <float>,    --flashlight-darkness-rigidity <float> %*s Flashlight darkness rigidity (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->flashlight_darkness_rigidity);
   // clang-format on
 }
 

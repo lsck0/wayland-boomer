@@ -51,7 +51,7 @@ static void handle_zoom(void) {
 }
 
 static void handle_flashlight(void) {
-  if (IsKeyPressed(KEY_F)) { g_state->flashlight_enabled = !g_state->flashlight_enabled; }
+  if (IsKeyPressed(KEY_F)) g_state->flashlight_enabled = !g_state->flashlight_enabled;
 
   float mouse_wheel_delta = GetMouseWheelMove();
   if (g_state->flashlight_enabled && mouse_wheel_delta != 0) {
