@@ -74,22 +74,72 @@ void process_commandline_arguments(int argc, char** argv) {
       shift(argc, argv);
       continue;
     }
+    if (strcmp(*argv, "-pr") == 0 || strcmp(*argv, "--pan-rigidity") == 0) {
+      shift(argc, argv);
+      if (argc < 1) { error_and_exit("Missing value for -pr/--pan-rigidity."); }
+      errno              = 0;
+      float parse_result = strtof(*argv, NULL);
+      if (errno != 0 || parse_result <= 0.0F) {
+        error_and_exit("Invalid value for -pr/--pan-rigidity. It has to be a positive floating point number.");
+      }
+
+      g_configuration->pan_rigidity = parse_result;
+
+      shift(argc, argv);
+      continue;
+    }
+    if (strcmp(*argv, "-fr") == 0 || strcmp(*argv, "--flashlight-rigidity") == 0) {
+      shift(argc, argv);
+      if (argc < 1) { error_and_exit("Missing value for -fr/--flashlight-rigidity."); }
+
+      errno              = 0;
+      float parse_result = strtof(*argv, NULL);
+      if (errno != 0 || parse_result <= 0.0F) {
+        error_and_exit("Invalid value for -fr/--flashlight-rigidity. It has to be a positive floating point number.");
+      }
+
+      g_configuration->flashlight_radius_rigidity = parse_result;
+
+      shift(argc, argv);
+      continue;
+    }
+    if (strcmp(*argv, "-fd") == 0 || strcmp(*argv, "--flashlight-darkness") == 0) {
+      shift(argc, argv);
+      if (argc < 1) { error_and_exit("Missing value for -fd/--flashlight-darkness."); }
+
+      errno              = 0;
+      float parse_result = strtof(*argv, NULL);
+      if (errno != 0 || parse_result < 0.0F || parse_result > 1.0F) {
+        error_and_exit("Invalid value for -fd/--flashlight-darkness. It has to be a floating point number between 0 and 1.");
+      }
+
+      g_configuration->flashlight_darkness = parse_result;
+
+      shift(argc, argv);
+      continue;
+    }
   }
 }
 
 static void print_usage(FILE* sink) {
   assert(sink != NULL);
 
+  unsigned long default_bg_color_hex = (g_configuration->background_color.r << 24) | (g_configuration->background_color.g << 16) |
+                                       (g_configuration->background_color.b << 8) | g_configuration->background_color.a;
+
   // clang-format off
   (void)fprintf(sink, "Usage: \n");
-  (void)fprintf(sink, "  grim - | %s [options]                        Boomer Mode\n", g_args->program_name);
-  (void)fprintf(sink, "  %s [options] < image.[png|jpg|webp|bmp]      Image Viewer Mode\n", g_args->program_name);
+  (void)fprintf(sink, "  grim - | %s [options]                            Boomer Mode\n", g_args->program_name);
+  (void)fprintf(sink, "  %s [options] < image.[png|jpg|webp|bmp]          Image Viewer Mode\n", g_args->program_name);
   (void)fprintf(sink, "Options:\n");
-  (void)fprintf(sink, "  -h,             --help                    %*s Show this message and exit.\n", (int)strlen(g_args->program_name), " ");
-  (void)fprintf(sink, "  -v,             --version                 %*s Show version and exit.\n", (int)strlen(g_args->program_name), " ");
-  (void)fprintf(sink, "  -ms <float>,    --monitor-scaling <float> %*s Compositor monitor scaling (default 1).\n", (int)strlen(g_args->program_name), " ");
-  (void)fprintf(sink, "  -sd <path>,     --screenshot-dir <path>   %*s Folder to save screenshots in.\n", (int)strlen(g_args->program_name), " ");
-  (void)fprintf(sink, "  -bg <rgba hex>, --background <rgba hex>   %*s Background color.\n", (int)strlen(g_args->program_name), " ");
+  (void)fprintf(sink, "  -h,             --help                        %*s Show this message and exit.\n", (int)strlen(g_args->program_name), " ");
+  (void)fprintf(sink, "  -v,             --version                     %*s Show version and exit.\n", (int)strlen(g_args->program_name), " ");
+  (void)fprintf(sink, "  -ms <float>,    --monitor-scaling <float>     %*s Compositor monitor scaling (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->monitor_scaling);
+  (void)fprintf(sink, "  -sd <path>,     --screenshot-dir <path>       %*s Folder to save screenshots in.\n", (int)strlen(g_args->program_name), " ");
+  (void)fprintf(sink, "  -bg <rgba hex>, --background <rgba hex>       %*s Background color (default %.8lx).\n", (int)strlen(g_args->program_name), " ", default_bg_color_hex);
+  (void)fprintf(sink, "  -pr <float>,    --pan-rigidity <float>        %*s Pan/Zoom rigidity (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->pan_rigidity);
+  (void)fprintf(sink, "  -fr <float>,    --flashlight-rigidity <float> %*s Flashlight radius rigidity (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->flashlight_radius_rigidity);
+  (void)fprintf(sink, "  -fd <float>,    --flashlight-darkness <float> %*s Flashlight darkness (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->flashlight_darkness);
   // clang-format on
 }
 

@@ -8,12 +8,13 @@ static const char* flashlight_frag_shader_source =
   "uniform sampler2D texture0;\n"
   "uniform vec2 center;\n"
   "uniform float radius;\n"
+  "uniform float darkness;\n"
   "void main(void)\n"
   "{\n"
   "    vec4 color = texture(texture0, fragTexCoord);\n"
   "    vec2 delta = gl_FragCoord.xy - center;\n"
   "    if (dot(delta, delta) > radius * radius) {\n"
-  "        color.rgb *= 0.1;\n"
+  "        color.rgb *= darkness;\n"
   "    }\n"
   "    fragColor = color;\n"
   "}\n";
@@ -35,10 +36,12 @@ int main(int argc, char** argv) {
     SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST | FLAG_WINDOW_TRANSPARENT | FLAG_WINDOW_RESIZABLE);
 
     // compensate for monitor scaling: compositor multiplies the window size by the scaling factor
-    int window_width     = (int)roundf((float)img.width / g_configuration->monitor_scaling);
-    int window_height    = (int)roundf((float)img.height / g_configuration->monitor_scaling);
-    g_state->zoom        = 1 / g_configuration->monitor_scaling;
-    g_initial_state.zoom = g_state->zoom;
+    int window_width             = (int)roundf((float)img.width / g_configuration->monitor_scaling);
+    int window_height            = (int)roundf((float)img.height / g_configuration->monitor_scaling);
+    g_state->zoom_current        = 1 / g_configuration->monitor_scaling;
+    g_state->zoom_target         = 1 / g_configuration->monitor_scaling;
+    g_initial_state.zoom_current = g_state->zoom_current;
+    g_initial_state.zoom_target  = g_state->zoom_target;
 
     InitWindow(window_width, window_height, g_configuration->window_title_boomermode);
   }
@@ -53,27 +56,57 @@ int main(int argc, char** argv) {
   int    loc_texture       = GetShaderLocation(flashlight_shader, "texture0");
   int    loc_center        = GetShaderLocation(flashlight_shader, "center");
   int    loc_radius        = GetShaderLocation(flashlight_shader, "radius");
+  int    loc_darkness      = GetShaderLocation(flashlight_shader, "darkness");
 
   SetTargetFPS(120);
   while (!WindowShouldClose()) {
+
+    /*
+     * ─────────────────────────────────────────────────────────
+     * INPUTS
+     * ─────────────────────────────────────────────────────────
+     */
+
     if (IsKeyPressed(KEY_Q) || IsKeyPressed(KEY_ESCAPE)) break;
     handle_inputs();
 
+    /*
+     * ─────────────────────────────────────────────────────────
+     * UPDATE
+     * ─────────────────────────────────────────────────────────
+     */
+
+    float dt       = GetFrameTime();
+    float r_smooth = 1.0F - expf(-g_configuration->flashlight_radius_rigidity * dt);
+    float z_smooth = 1.0F - expf(-g_configuration->pan_rigidity * dt);
+
+    g_state->flashlight_radius_current = Lerp(g_state->flashlight_radius_current, g_state->flashlight_radius_target, r_smooth);
+    g_state->zoom_current              = Lerp(g_state->zoom_current, g_state->zoom_target, z_smooth);
+    g_state->pan_current               = Vector2Lerp(g_state->pan_current, g_state->pan_target, z_smooth);
+
+    /*
+     * ─────────────────────────────────────────────────────────
+     * RENDER
+     * ─────────────────────────────────────────────────────────
+     */
+
     BeginTextureMode(img_render_texture);
     ClearBackground(g_configuration->background_color);
-    DrawTextureEx(img_texture, g_state->pan, 0.0F, g_state->zoom, WHITE);
+    DrawTextureEx(img_texture, g_state->pan_current, 0.0F, g_state->zoom_current, WHITE);
     lines_draw();
     EndTextureMode();
 
     BeginDrawing();
     if (g_state->flashlight_enabled) {
-      Vector2 mouse_pos    = GetMousePosition();
-      float   u_center[2]  = { mouse_pos.x, (float)GetScreenHeight() - mouse_pos.y };
-      float   u_radius[1]  = { g_state->flashlight_radius };
-      int     u_texture[1] = { 0 };
+      Vector2 mouse_pos     = GetMousePosition();
+      int     u_texture[1]  = { 0 };
+      float   u_center[2]   = { mouse_pos.x, (float)GetScreenHeight() - mouse_pos.y };
+      float   u_radius[1]   = { g_state->flashlight_radius_current };
+      float   u_darkness[1] = { g_state->flashlight_darkness_current };
+      SetShaderValue(flashlight_shader, loc_texture, u_texture, SHADER_UNIFORM_INT);
       SetShaderValue(flashlight_shader, loc_center, u_center, SHADER_UNIFORM_VEC2);
       SetShaderValue(flashlight_shader, loc_radius, u_radius, SHADER_UNIFORM_FLOAT);
-      SetShaderValue(flashlight_shader, loc_texture, u_texture, SHADER_UNIFORM_INT);
+      SetShaderValue(flashlight_shader, loc_darkness, u_darkness, SHADER_UNIFORM_FLOAT);
 
       BeginShaderMode(flashlight_shader);
     }

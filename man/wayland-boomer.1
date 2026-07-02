@@ -16,14 +16,23 @@ Show this message and exit.
 .B -v, --version
 Show version and exit.
 .TP
+.B -ms <float>, --monitor-scaling <float>
+Compositor monitor scaling (default 1.000000).
+.TP
 .B -sd <path>, --screenshot-dir <path>
 Folder to save screenshots in.
 .TP
-.B -ms <float>, --monitor-scaling <float>
-Compositor monitor scaling (default 1).
-.TP
 .B -bg <rgba hex>, --background <rgba hex>
-Background color.
+Background color (default 000000ff).
+.TP
+.B -pr <float>, --pan-rigidity <float>
+Pan/Zoom rigidity (default 25.000000).
+.TP
+.B -fr <float>, --flashlight-rigidity <float>
+Flashlight radius rigidity (default 10.000000).
+.TP
+.B -fd <float>, --flashlight-darkness <float>
+Flashlight darkness (default 0.100000).
 .PP
 All defaults can be changed, if there is a need for adding more options, please open an issue.
 .SH CONFIGURATION

@@ -38,7 +38,7 @@ void lines_draw(void) {
     int n = line->points_count;
     if (n == 0) return;
 
-    float screen_radius    = line->thickness * g_state->zoom;
+    float screen_radius    = line->thickness * g_state->zoom_current;
     float screen_thickness = screen_radius * 2.0F;
 
     if (n == 1) {
@@ -97,7 +97,7 @@ static void line_begin(void) {
 
   Line* new_line = &lines[lines_count++];
   *new_line      = (Line){
-         .thickness = g_configuration->draw_thickness / g_state->zoom,
+    .thickness = g_configuration->draw_thickness / g_state->zoom_current,
   };
 }
 
@@ -117,9 +117,9 @@ static void line_add_point(Vector2 texture_pos) {
 }
 
 static Vector2 to_texture_coords(Vector2 screen_pos) {
-  return Vector2Scale(Vector2Subtract(screen_pos, g_state->pan), 1.0F / g_state->zoom);
+  return Vector2Scale(Vector2Subtract(screen_pos, g_state->pan_current), 1.0F / g_state->zoom_current);
 }
 
 static Vector2 to_screen_coords(Vector2 texture_pos) {
-  return Vector2Add(Vector2Scale(texture_pos, g_state->zoom), g_state->pan);
+  return Vector2Add(Vector2Scale(texture_pos, g_state->zoom_current), g_state->pan_current);
 }

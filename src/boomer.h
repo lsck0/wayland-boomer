@@ -19,12 +19,25 @@
 #include <unistd.h>
 
 typedef struct {
-  Vector2 pan;
-  float   zoom;
-  bool    flashlight_enabled;
-  float   flashlight_radius;
-  bool    is_drawing;
-} State;
+  char* window_title_boomermode;
+  char* window_title_imagemode;
+  int   window_width;
+  int   window_height;
+  float monitor_scaling;
+  Color background_color;
+  float pan_rigidity;
+  float zoom_min;
+  float zoom_max;
+  float zoom_step;
+  float flashlight_radius_min;
+  float flashlight_radius_max;
+  float flashlight_radius_step;
+  float flashlight_radius_initial;
+  float flashlight_radius_rigidity;
+  float flashlight_darkness;
+  Color draw_color;
+  float draw_thickness;
+} Configuration;
 
 typedef struct {
   char* program_name;
@@ -32,21 +45,17 @@ typedef struct {
 } Args;
 
 typedef struct {
-  char* window_title_boomermode;
-  char* window_title_imagemode;
-  int   window_width;
-  int   window_height;
-  float monitor_scaling;
-  Color background_color;
-  float zoom_min;
-  float zoom_max;
-  float zoom_step;
-  float flashlight_radius_min;
-  float flashlight_radius_max;
-  float flashlight_radius_step;
-  Color draw_color;
-  float draw_thickness;
-} Configuration;
+  Vector2 pan_current;
+  Vector2 pan_target;
+  float   zoom_current;
+  float   zoom_target;
+  bool    flashlight_rendering;
+  bool    flashlight_enabled;
+  float   flashlight_radius_current;
+  float   flashlight_radius_target;
+  float   flashlight_darkness_current;
+  bool    is_drawing;
+} State;
 
 extern Configuration g_default_configuration;
 extern State         g_initial_state;
