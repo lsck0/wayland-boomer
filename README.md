@@ -63,6 +63,7 @@ monitor=DP-1, 3840x2160@144, 0x0, 1.666667  =>  --monitor-scaling 1.666667
 | `s`                     | Take a Screenshot to Clipboard (needs wl-copy)          |
 | `CTRL` + `s`            | Take a Screenshot to File (to $XDG_PICTURE_DIR / $HOME) |
 | Right Mouse Button Drag | Draw                                                    |
+| m                       | Mirror                                                  |
 
 ## Installation
 

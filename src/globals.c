@@ -36,6 +36,7 @@ State g_initial_state = {
   .flashlight_enabled            = false,
   .flashlight_enabled_previously = false,
   .is_drawing                    = false,
+  .is_mirrored                   = false,
 };
 
 Configuration* g_configuration = NULL;

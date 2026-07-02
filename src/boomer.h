@@ -57,6 +57,7 @@ typedef struct {
   float   flashlight_radius_target;
   float   flashlight_darkness_current;
   bool    is_drawing;
+  bool    is_mirrored;
 } State;
 
 extern Configuration g_default_configuration;

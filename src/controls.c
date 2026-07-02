@@ -7,6 +7,7 @@ static void handle_reset(void);
 static void handle_panning(void);
 static void handle_zoom(void);
 static void handle_flashlight(void);
+static void handle_mirroring(void);
 static void handle_screenshot(void);
 
 void handle_inputs(void) {
@@ -14,6 +15,7 @@ void handle_inputs(void) {
   handle_panning();
   handle_zoom();
   handle_flashlight();
+  handle_mirroring();
   handle_screenshot();
   handle_draw();
 }
@@ -61,6 +63,10 @@ static void handle_flashlight(void) {
           Clamp(g_state->flashlight_radius_target, g_configuration->flashlight_radius_min, g_configuration->flashlight_radius_max);
     }
   }
+}
+
+static void handle_mirroring(void) {
+  if (IsKeyPressed(KEY_M)) g_state->is_mirrored = !g_state->is_mirrored;
 }
 
 // this is essentially raylib's TakeScreenshot() and ExportImage() decomposed
