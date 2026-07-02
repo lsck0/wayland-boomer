@@ -17,7 +17,7 @@ Configuration g_default_configuration = {
   .draw_thickness          = 3.5F,
 };
 
-Args g_default_args = {
+static Args g_default_args = {
   .program_name      = NULL,
   .screenshot_folder = NULL,
 };
@@ -34,7 +34,7 @@ Configuration* g_configuration = NULL;
 Args*          g_args          = NULL;
 State*         g_state         = NULL;
 
-__attribute__((__constructor__)) void initialize_globals(void) {
+__attribute__((__constructor__)) static void initialize_globals(void) {
   g_configuration = malloc(sizeof(Configuration));
   assert(g_configuration);
   *g_configuration = g_default_configuration;
@@ -48,7 +48,7 @@ __attribute__((__constructor__)) void initialize_globals(void) {
   *g_state = g_initial_state;
 }
 
-__attribute__((__destructor__)) void deinitialize_globals(void) {
+__attribute__((__destructor__)) static void deinitialize_globals(void) {
   free(g_configuration);
   free(g_args);
   free(g_state);
