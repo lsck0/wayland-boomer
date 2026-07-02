@@ -43,8 +43,10 @@ int main(int argc, char** argv) {
     InitWindow(window_width, window_height, g_configuration->window_title_boomermode);
   }
 
-  Texture2D       img_texture        = LoadTextureFromImage(img);
+  Texture2D img_texture = LoadTextureFromImage(img);
+  SetTextureFilter(img_texture, TEXTURE_FILTER_POINT);
   RenderTexture2D img_render_texture = LoadRenderTexture(img.width, img.height);
+  SetTextureFilter(img_render_texture.texture, TEXTURE_FILTER_POINT);
   UnloadImage(img);
 
   Shader flashlight_shader = LoadShaderFromMemory(NULL, flashlight_frag_shader_source);
