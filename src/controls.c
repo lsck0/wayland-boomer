@@ -30,7 +30,7 @@ static void handle_reset(void) {
 static void handle_panning(void) {
   if (IsMouseButtonDown(MOUSE_BUTTON_LEFT && !g_state->is_drawing)) {
     Vector2 mouse_delta    = GetMouseDelta();
-    g_state->pan_target.x += mouse_delta.x;
+    g_state->pan_target.x += g_state->is_mirrored ? -mouse_delta.x : mouse_delta.x;
     g_state->pan_target.y += mouse_delta.y;
   }
 }
@@ -39,6 +39,7 @@ static void handle_zoom(void) {
   float mouse_wheel_delta = GetMouseWheelMove();
   if (mouse_wheel_delta != 0 && !g_state->is_drawing && !IsKeyDown(KEY_LEFT_CONTROL) && !IsKeyDown(KEY_RIGHT_CONTROL)) {
     Vector2 mouse_pos = GetMousePosition();
+    if (g_state->is_mirrored) mouse_pos.x = (float)GetScreenWidth() - mouse_pos.x;
     float   prev_zoom = g_state->zoom_target;
     Vector2 world     = {
       (mouse_pos.x - g_state->pan_target.x) / prev_zoom,
