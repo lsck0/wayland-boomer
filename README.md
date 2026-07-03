@@ -14,8 +14,8 @@
 
 ```sh
 Usage:
-  grim - | ./wayland-boomer [options]                                      Boomer Mode
-  ./wayland-boomer [options] < image.[png|jpg|webp|bmp]                    Image Viewer Mode
+  grim -t ppm - | ./wayland-boomer [options]                               Boomer Mode (ppm = fastest startup)
+  ./wayland-boomer [options] < image.[ppm|png|jpg|webp|bmp]                Image Viewer Mode
 Options:
   -h,              --help                                                  Show this message and exit.
   -v,              --version                                               Show version and exit.
