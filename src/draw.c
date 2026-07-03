@@ -25,7 +25,10 @@ void handle_draw(void) {
       g_state->is_drawing = true;
     }
 
-    line_add_point(to_texture_coords(GetMousePosition()));
+    Vector2 mouse = GetMousePosition();
+    if (g_state->is_mirrored) mouse.x = (float)GetScreenWidth() - mouse.x;
+
+    line_add_point(to_texture_coords(mouse));
   } else {
     g_state->is_drawing = false;
   }

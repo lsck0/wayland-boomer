@@ -20,19 +20,6 @@ static const char* flashlight_frag_shader_source =
   "}\n";
 // clang-format on
 
-// clang-format off
-static const char* mirror_frag_shader_source =
-  "#version 330 core\n"
-  "in vec2 fragTexCoord;\n"
-  "out vec4 fragColor;\n"
-  "uniform sampler2D texture0;\n"
-  "void main(void)\n"
-  "{\n"
-  "    vec2 mirroredTexCoord = vec2(1.0 - fragTexCoord.x, fragTexCoord.y);\n"
-  "    fragColor = texture(texture0, mirroredTexCoord);\n"
-  "}\n";
-// clang-format on
-
 int main(int argc, char** argv) {
   process_commandline_arguments(argc, argv);
 
@@ -70,8 +57,6 @@ int main(int argc, char** argv) {
   int    loc_center        = GetShaderLocation(flashlight_shader, "center");
   int    loc_radius        = GetShaderLocation(flashlight_shader, "radius");
   int    loc_darkness      = GetShaderLocation(flashlight_shader, "darkness");
-
-  Shader mirror_shader = LoadShaderFromMemory(NULL, mirror_frag_shader_source);
 
   SetTargetFPS(120);
   while (!WindowShouldClose()) {
@@ -131,11 +116,9 @@ int main(int argc, char** argv) {
      */
 
     BeginTextureMode(img_render_texture);
-    if (g_state->is_mirrored) BeginShaderMode(mirror_shader);
     ClearBackground(g_configuration->background_color);
     DrawTextureEx(img_texture, g_state->pan_current, 0.0F, g_state->zoom_current, WHITE);
     lines_draw();
-    if (g_state->is_mirrored) EndShaderMode();
     EndTextureMode();
 
     BeginDrawing();
@@ -154,10 +137,21 @@ int main(int argc, char** argv) {
     }
 
     ClearBackground(g_configuration->background_color);
-    DrawTextureRec(
+    float     tex_width     = (float)img_render_texture.texture.width;
+    float     tex_height    = (float)img_render_texture.texture.height;
+    Rectangle mirror_source = { 0, 0, g_state->is_mirrored ? -tex_width : tex_width, -tex_height };
+    float     mirror_dest_x = g_state->is_mirrored ? (float)GetScreenWidth() - tex_width : 0.0F;
+    DrawTexturePro(
         img_render_texture.texture,
-        (Rectangle){ 0, 0, (float)img_render_texture.texture.width, (float)-img_render_texture.texture.height },
+        mirror_source,
+        (Rectangle){
+            mirror_dest_x,
+            0,
+            tex_width,
+            tex_height,
+        },
         (Vector2){ 0, 0 },
+        0.0F,
         WHITE
     );
 
