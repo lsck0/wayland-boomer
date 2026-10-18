@@ -17,7 +17,7 @@ Show this message and exit.
 Show version and exit.
 .TP
 .B -ms <float>, --monitor-scaling <float>
-Compositor monitor scaling (default 1.000000).
+Compositor monitor scaling, sizes the window (default 1.000000).
 .TP
 .B -sd <path>, --screenshot-dir <path>
 Folder to save screenshots in.
@@ -52,7 +52,10 @@ windowrule = noanim,    title:^wayland-boomer$
 You need to set monitor to your leftmost monitor, hyprctl monitors shows all monitors and their IDs.
 When opening a file, the window title will be "wayland-boomer - image viewer".
 .PP
-In case you are using monitor scaling, pass the same value to the --monitor-scaling option:
+In case you are using monitor scaling, pass the same value to the --monitor-scaling option.
+It sizes the window so that it covers the screenshot exactly; the window renders at native resolution,
+so at the start every screenshot pixel is one screen pixel. The compositor reports its scale only after the
+window is shown, a mismatch is logged as a warning.
 .PP
 .nf
 monitor=DP-1, 3840x2160@144, 0x0, 1.666667  =>  --monitor-scaling 1.666667

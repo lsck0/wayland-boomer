@@ -29,17 +29,17 @@ static void handle_reset(void) {
 
 static void handle_panning(void) {
   if (IsMouseButtonDown(MOUSE_BUTTON_LEFT && !g_state->is_drawing)) {
-    Vector2 mouse_delta    = GetMouseDelta();
-    g_state->pan_target.x += g_state->is_mirrored ? -mouse_delta.x : mouse_delta.x;
-    g_state->pan_target.y += mouse_delta.y;
+    Vector2 delta          = mouse_delta();
+    g_state->pan_target.x += g_state->is_mirrored ? -delta.x : delta.x;
+    g_state->pan_target.y += delta.y;
   }
 }
 
 static void handle_zoom(void) {
   float mouse_wheel_delta = GetMouseWheelMove();
   if (mouse_wheel_delta != 0 && !g_state->is_drawing && !IsKeyDown(KEY_LEFT_CONTROL) && !IsKeyDown(KEY_RIGHT_CONTROL)) {
-    Vector2 mouse_pos = GetMousePosition();
-    if (g_state->is_mirrored) mouse_pos.x = (float)GetScreenWidth() - mouse_pos.x;
+    Vector2 mouse_pos = mouse_position();
+    if (g_state->is_mirrored) mouse_pos.x = framebuffer_size().x - mouse_pos.x;
     float   prev_zoom = g_state->zoom_target;
     Vector2 world     = {
       (mouse_pos.x - g_state->pan_target.x) / prev_zoom,
@@ -76,8 +76,9 @@ void handle_screenshot(void) {
     bool should_save_to_file = false;
     if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) should_save_to_file = true;
 
-    int screen_width  = GetScreenWidth();
-    int screen_height = GetScreenHeight();
+    Vector2 fb_size       = framebuffer_size();
+    int     screen_width  = (int)fb_size.x;
+    int     screen_height = (int)fb_size.y;
 
     unsigned char* rlReadScreenPixels(int width, int height);
     unsigned char* raw_image_data = rlReadScreenPixels(screen_width, screen_height);

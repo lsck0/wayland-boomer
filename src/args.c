@@ -134,7 +134,7 @@ static void print_usage(FILE* sink) {
   (void)fprintf(sink, "Options:\n");
   (void)fprintf(sink, "  -h,              --help                                 %*s Show this message and exit.\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -v,              --version                              %*s Show version and exit.\n", (int)strlen(g_args->program_name), " ");
-  (void)fprintf(sink, "  -ms <float>,     --monitor-scaling <float>              %*s Compositor monitor scaling (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->monitor_scaling);
+  (void)fprintf(sink, "  -ms <float>,     --monitor-scaling <float>              %*s Compositor monitor scaling, sizes the window (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->monitor_scaling);
   (void)fprintf(sink, "  -sd <path>,      --screenshot-dir <path>                %*s Folder to save screenshots in.\n", (int)strlen(g_args->program_name), " ");
   (void)fprintf(sink, "  -bg <rgba hex>,  --background <rgba hex>                %*s Background color (default %.8lx).\n", (int)strlen(g_args->program_name), " ", default_bg_color_hex);
   (void)fprintf(sink, "  -pr <float>,     --pan-rigidity <float>                 %*s Pan/Zoom rigidity (default %lf).\n", (int)strlen(g_args->program_name), " ", g_configuration->pan_rigidity);

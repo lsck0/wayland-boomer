@@ -72,6 +72,12 @@ void process_commandline_arguments(int argc, char** argv);
 
 Image load_image_from_stdin(bool* out_was_file);
 
+Vector2 framebuffer_size(void);
+float   framebuffer_scale(void);
+void    framebuffer_begin(void);
+Vector2 mouse_position(void);
+Vector2 mouse_delta(void);
+
 void handle_inputs(void);
 void handle_draw(void);
 void lines_draw(void);

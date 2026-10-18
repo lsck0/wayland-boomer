@@ -25,8 +25,8 @@ void handle_draw(void) {
       g_state->is_drawing = true;
     }
 
-    Vector2 mouse = GetMousePosition();
-    if (g_state->is_mirrored) mouse.x = (float)GetScreenWidth() - mouse.x;
+    Vector2 mouse = mouse_position();
+    if (g_state->is_mirrored) mouse.x = framebuffer_size().x - mouse.x;
 
     line_add_point(to_texture_coords(mouse));
   } else {
@@ -100,7 +100,7 @@ static void line_begin(void) {
 
   Line* new_line = &lines[lines_count++];
   *new_line      = (Line){
-    .thickness = g_configuration->draw_thickness / g_state->zoom_current,
+    .thickness = g_configuration->draw_thickness * framebuffer_scale() / g_state->zoom_current,
   };
 }
 

@@ -21,9 +21,9 @@ install: $(EXEC)
 	sudo cp $(EXEC) /usr/bin/
 
 $(EXEC):
-	clang ./src/main.c ./src/globals.c ./src/args.c ./src/controls.c ./src/image.c ./src/draw.c \
+	clang ./src/main.c ./src/globals.c ./src/args.c ./src/controls.c ./src/image.c ./src/draw.c ./src/window.c \
 		-o $(EXEC) \
 		-std=c23 -pedantic -Wall -Wextra -Wpedantic -ggdb -O3 \
-		-flto -fPIE -lm -lglfw -I./vendor/ -L./vendor/ -lraylib \
+		-flto -fPIE -lm -lglfw -Wl,--wrap=glfwWindowHint -I./vendor/ -L./vendor/ -lraylib \
 		-fcf-protection=full -fstack-protector-strong -fno-omit-frame-pointer \
 		-DVERSION="\"$(GIT_COMMIT)\""

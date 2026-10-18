@@ -19,7 +19,7 @@ Usage:
 Options:
   -h,              --help                                                  Show this message and exit.
   -v,              --version                                               Show version and exit.
-  -ms <float>,     --monitor-scaling <float>                               Compositor monitor scaling (default 1.000000).
+  -ms <float>,     --monitor-scaling <float>                               Compositor monitor scaling, sizes the window (default 1.000000).
   -sd <path>,      --screenshot-dir <path>                                 Folder to save screenshots in.
   -bg <rgba hex>,  --background <rgba hex>                                 Background color (default 000000ff).
   -pr <float>,     --pan-rigidity <float>                                  Pan/Zoom rigidity (default 25.000000).
@@ -44,7 +44,7 @@ windowrule = noanim,    title:^wayland-boomer$
 You need to set `monitor` to your leftmost monitor, `hyprctl monitors` shows all monitors and their IDs.
 When opening a file, the window title will be `wayland-boomer - image viewer`.
 
-In case you are using monitor scaling, pass the same value to the `--monitor-scaling` option:
+In case you are using monitor scaling, pass the same value to the `--monitor-scaling` option.
 
 ```
 monitor=DP-1, 3840x2160@144, 0x0, 1.666667  =>  --monitor-scaling 1.666667

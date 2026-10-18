@@ -35,16 +35,15 @@ int main(int argc, char** argv) {
   } else {
     SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST | FLAG_WINDOW_TRANSPARENT | FLAG_WINDOW_RESIZABLE);
 
-    // compensate for monitor scaling: compositor multiplies the window size by the scaling factor
-    int window_width             = (int)roundf((float)img.width / g_configuration->monitor_scaling);
-    int window_height            = (int)roundf((float)img.height / g_configuration->monitor_scaling);
-    g_state->zoom_current        = 1 / g_configuration->monitor_scaling;
-    g_state->zoom_target         = 1 / g_configuration->monitor_scaling;
-    g_initial_state.zoom_current = g_state->zoom_current;
-    g_initial_state.zoom_target  = g_state->zoom_target;
+    // the window is sized in logical pixels, its framebuffer has native pixels: one screenshot pixel per framebuffer pixel
+    // the compositor reports its scale only after the window is mapped and does not follow a later resize, hence the option
+    int window_width  = (int)roundf((float)img.width / g_configuration->monitor_scaling);
+    int window_height = (int)roundf((float)img.height / g_configuration->monitor_scaling);
 
     InitWindow(window_width, window_height, g_configuration->window_title_boomermode);
   }
+
+  bool scaling_checked = was_file;
 
   Texture2D img_texture = LoadTextureFromImage(img);
   SetTextureFilter(img_texture, TEXTURE_FILTER_POINT);
@@ -69,6 +68,20 @@ int main(int argc, char** argv) {
 
     if (IsKeyPressed(KEY_Q) || IsKeyPressed(KEY_ESCAPE)) break;
     handle_inputs();
+
+    // the scale arrives a few frames after the window is mapped
+    float scale = GetWindowScaleDPI().x;
+    if (!scaling_checked && scale != 1.0F) {
+      if (fabsf(scale - g_configuration->monitor_scaling) > 0.001F) {
+        TraceLog(
+            LOG_WARNING,
+            "Monitor scaling is %f but --monitor-scaling is %f, the window does not fit the screenshot",
+            scale,
+            g_configuration->monitor_scaling
+        );
+      }
+      scaling_checked = true;
+    }
 
     /*
      * ─────────────────────────────────────────────────────────
@@ -122,11 +135,13 @@ int main(int argc, char** argv) {
     EndTextureMode();
 
     BeginDrawing();
+    framebuffer_begin();
+    Vector2 fb_size = framebuffer_size();
     if (g_state->flashlight_rendering) {
-      Vector2 mouse_pos     = GetMousePosition();
+      Vector2 mouse_pos     = mouse_position();
       int     u_texture[1]  = { 0 };
-      float   u_center[2]   = { mouse_pos.x, (float)GetScreenHeight() - mouse_pos.y };
-      float   u_radius[1]   = { g_state->flashlight_radius_current };
+      float   u_center[2]   = { mouse_pos.x, fb_size.y - mouse_pos.y };
+      float   u_radius[1]   = { g_state->flashlight_radius_current * framebuffer_scale() };
       float   u_darkness[1] = { g_state->flashlight_darkness_current };
       SetShaderValue(flashlight_shader, loc_texture, u_texture, SHADER_UNIFORM_INT);
       SetShaderValue(flashlight_shader, loc_center, u_center, SHADER_UNIFORM_VEC2);
@@ -140,7 +155,7 @@ int main(int argc, char** argv) {
     float     tex_width     = (float)img_render_texture.texture.width;
     float     tex_height    = (float)img_render_texture.texture.height;
     Rectangle mirror_source = { 0, 0, g_state->is_mirrored ? -tex_width : tex_width, -tex_height };
-    float     mirror_dest_x = g_state->is_mirrored ? (float)GetScreenWidth() - tex_width : 0.0F;
+    float     mirror_dest_x = g_state->is_mirrored ? fb_size.x - tex_width : 0.0F;
     DrawTexturePro(
         img_render_texture.texture,
         mirror_source,
