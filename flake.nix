@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "wayland alternative for tsoding's X11 boomer";
 
   inputs = {
     nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst";
@@ -23,7 +23,7 @@
 				'';
 
         installPhase = ''
-					install -Dm755 ${pname} $out/bin/${pname}
+					install -D ${pname} $out/bin/${pname}
 				'';
       };
     }) inputs.nixpkgs.legacyPackages;
